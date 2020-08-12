@@ -1520,22 +1520,25 @@ public class Solve {
         whiteGreenComplete = false;
         whiteOrangeComplete = false;
         whiteCrossComplete = false;
-        whiteCornersComplete = false;
 
+        // white corners
+        whiteCornersComplete = false;
         redBlueWhiteCornerComplete = false;
         redGreenWhiteCornerComplete = false;
         orangeBlueWhiteCornerComplete = false;
         greenOrangeWhiteCornerComplete = false;
 
+        // mid layer
         redGreenComplete = false;
         redBlueComplete = false;
         blueOrangeComplete = false;
         greenOrangeComplete = false;
-
+        midLayerComplete = false;
+        //last layer
         yellowCrossComplete = false;
         orientateLLComplete = false;
-
         yellowCornersComplete = false;
+        cubeComplete = false;
 
         findMidLayer();
         for (Cubie cubie : midLayer) {

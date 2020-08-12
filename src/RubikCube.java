@@ -11,6 +11,7 @@ public class RubikCube extends PApplet {
     Cubie[] cube = new Cubie[numOfSides * numOfSides * numOfSides];
     boolean solving = false;
     Solve solve = new Solve(this, cube, this);
+    String instructions = "Move the camera with the mouse. Rotate the sides with f, b, r, l, u ,d for front, back, right, left, up and down faces respectively or capitals to rotate anticlockwise. Press space to solve!";
 
     public void setup() {
         cam = new PeasyCam(this, 400);
@@ -125,12 +126,23 @@ public class RubikCube extends PApplet {
 
 
     public void draw() {
-        background(51);
+        background(60);
+        cam.beginHUD();
+        fill(-1);
+        text(instructions, 600, 50, 150, 150);
+
+        cam.endHUD();
+        //------------
         scale(50);
         if (solving) {
             if (frameCount % 12 == 0) {
                 solve.solve();
             }
+        }
+        if (solve.cubeComplete == true) {
+            solve.reset();
+            solving = false;
+            System.out.println(solving);
         }
         currentMove.update();
 
@@ -152,43 +164,45 @@ public class RubikCube extends PApplet {
 
 
     public void keyPressed() {
-        switch (key) {
-            case 'b':
-                turnB(-1);
-                break;
-            case 'B':
-                turnB(1);
-                break;
-            case 'f':
-                turnF(1);
-                break;
-            case 'F':
-                turnF(-1);
-                break;
-            case 'u':
-                turnU(1);
-                break;
-            case 'U':
-                turnU(-1);
-                break;
-            case 'd':
-                turnD(1);
-                break;
-            case 'D':
-                turnD(-1);
-                break;
-            case 'l':
-                turnL(1);
-                break;
-            case 'L':
-                turnL(-1);
-                break;
-            case 'r':
-                turnR(1);
-                break;
-            case 'R':
-                turnR(-1);
-                break;
+
+        if (!solving) {
+            switch (key) {
+                case 'b':
+                    turnB(-1);
+                    break;
+                case 'B':
+                    turnB(1);
+                    break;
+                case 'f':
+                    turnF(1);
+                    break;
+                case 'F':
+                    turnF(-1);
+                    break;
+                case 'u':
+                    turnU(1);
+                    break;
+                case 'U':
+                    turnU(-1);
+                    break;
+                case 'd':
+                    turnD(1);
+                    break;
+                case 'D':
+                    turnD(-1);
+                    break;
+                case 'l':
+                    turnL(1);
+                    break;
+                case 'L':
+                    turnL(-1);
+                    break;
+                case 'r':
+                    turnR(1);
+                    break;
+                case 'R':
+                    turnR(-1);
+                    break;
 //            case 'm':
 //                turnM(1);
 //                break;
@@ -208,23 +222,24 @@ public class RubikCube extends PApplet {
 //            case 'E':
 //                turnE(-1);
 //                break;
-            case ' ':
-                if (solving) {
-                    solve.reset();
-                    solving = false;
-                    System.out.println(solving);
-                } else {
+                case ' ':
                     solving = true;
-                    solve.reset();
                     System.out.println(solving);
-
-                }
-                break;
-
-
+                    break;
+            }
+        } else if (key == ' ') {
+            solve.reset();
+            solving = false;
+            System.out.println(solving);
         }
+
     }
 
+    public static void main(String[] args) {
+        String[] appletArgs = {"RubikCube"};
+
+        PApplet.main(appletArgs);
+    }
 
     public void settings() {
         size(800, 800, P3D);
